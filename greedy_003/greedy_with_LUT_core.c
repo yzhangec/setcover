@@ -13,7 +13,7 @@ void greedy_with_LUT_core(struct problem* specific_problem, struct solution* spe
 	struct element current_element;
 	
 	// allocate and initialize solution array
-	specific_solution->mask_of_picked_sets = calloc(specific_problem->number_of_sets, sizeof(int));
+	specific_solution->mask_of_picked_sets = (int*)calloc(specific_problem->number_of_sets, sizeof(int));
 	for (int i = 0; i < specific_problem->number_of_sets; ++i)
 		specific_solution->mask_of_picked_sets[i] = 0;
 	
@@ -24,14 +24,14 @@ void greedy_with_LUT_core(struct problem* specific_problem, struct solution* spe
 	specific_solution->number_of_sets_picked = 0;
 	
 	while(!stop) {
-		
+		// Init when read the problem description
 		current_set_index = specific_problem->minimum_efficiency_set_index;
 		current_element_index = specific_problem->sets[current_set_index].index_of_root_element;
 		
 		// store set that was picked
 		specific_solution->mask_of_picked_sets[current_set_index] = 1;
 		
-		// iterate over elements
+		// iterate over elements until elements are removed from all sets
 		while (current_element_index != -1) {
 			
 			// look up element to be removed

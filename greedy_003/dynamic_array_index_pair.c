@@ -4,7 +4,7 @@
 
 /* dynamically sized array; doubles size if added element exceeds capacity; elements are index pairs */
 void _double_capacity(struct dynamic_array_index_pair* array) {
-	struct index_pair* extended_data = calloc(2 * array->capacity, sizeof(struct index_pair));		
+	struct index_pair* extended_data = (struct index_pair*)calloc(2 * array->capacity, sizeof(struct index_pair));		
 	for (int i = 0; i < array->capacity; ++i)
 		extended_data[i] = (array->data)[i];
 	free(array->data);
@@ -19,7 +19,7 @@ void _add(struct index_pair arg, struct dynamic_array_index_pair* array) {
 }
 
 void initialize(struct dynamic_array_index_pair* array) {
-	array->data = calloc(16, sizeof(struct index_pair));
+	array->data = (struct index_pair*)calloc(16, sizeof(struct index_pair));
 	array->size = 0;
 	array->capacity = 16;
 	array->add = _add;
